@@ -6,14 +6,6 @@ from fastapi.responses import HTMLResponse, JSONResponse
 
 app = FastAPI()
 
-DAMAGED_SYSTEM = [
-    "navigation",
-    "communications",
-    "life_support",
-    "engines",
-    "deflector_shield",
-]
-
 SYSTEM_CODES = {
     "navigation": "NAV-01",
     "communications": "COM-02",
@@ -22,7 +14,7 @@ SYSTEM_CODES = {
     "deflector_shield": "SHLD-05",
 }
 
-damaged_system = random.choice(DAMAGED_SYSTEM)
+damaged_system = random.choice(list(SYSTEM_CODES.keys()))
 
 
 @app.get("/status", response_class=JSONResponse)

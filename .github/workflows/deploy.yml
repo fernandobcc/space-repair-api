@@ -1,0 +1,31 @@
+name: Deploy FastAPI App to Render
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment on push to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10.2' 
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Deploy to Render
+        run: |
+          curl -sSL https://render.com/deploy/success.json \
+            -d '{"branch":"main","repo":"https://github.com/${{ github.repository }}"}'
